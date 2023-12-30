@@ -1,12 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Botão Typebot</title>
-    <link rel="stylesheet" type="text/css" href="botaocss.css">
+    <title>Botão de Exemplo</title>
+    <style>
+        /* Estilo para o botão */
+        .meu-botao {
+            background-color: #008a7c;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Estilo de hover (quando o mouse passa por cima) */
+        .meu-botao:hover {
+            background-color: #00726b;
+        }
+    </style>
 </head>
 <body>
-    <!-- Seu conteúdo HTML aqui -->
+    <button class="meu-botao" onclick="copiarParaAreaTransferencia()">COPIAR</button>
+
+    <script>
+        function copiarParaAreaTransferencia() {
+            // Supondo que a variável {{pixcopiaecola}} seja substituída pelo valor desejado
+            var conteudoPIX = {{pixcopiaecola}}; // Este valor será substituído pelo Typebot
+
+            // Crie um elemento temporário para copiar o conteúdo
+            var elementoTemporario = document.createElement('textarea');
+            elementoTemporario.style.position = 'fixed'; // Evita rolagem no navegador
+            elementoTemporario.style.left = '-9999px'; // Torna o textarea invisível
+            elementoTemporario.value = conteudoPIX;
+            document.body.appendChild(elementoTemporario);
+            elementoTemporario.select();
+
+            try {
+                // Tente copiar o conteúdo para a área de transferência usando a API Clipboard
+                document.execCommand('copy');
+                // Crie um elemento de mensagem
+                const message = document.createElement("div");
+                message.textContent = "Copiado!";
+                message.style.position = "fixed";
+                message.style.bottom = "10px"; // Altere esta linha para ajustar a posição vertical
+                message.style.left = "50%";
+                message.style.transform = "translateX(-50%)";
+                message.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // Fundo preto com baixa opacidade
+                message.style.color = "#fff";
+                message.style.padding = "10px 20px";
+                message.style.borderRadius = "5px";
+                message.style.opacity = "0";
+                message.style.transition = "opacity 1s ease-in-out";
+                message.style.zIndex = "9999";
+
+                // Adicione a mensagem ao corpo do documento
+                document.body.appendChild(message);
+
+                // Exiba a mensagem
+                message.style.opacity = "1";
+
+                // Defina um temporizador para esconder a mensagem após 2 segundos
+                setTimeout(() => {
+                    message.style.opacity = "0";
+                }, 2000);
+            } catch (err) {
+                // Trate qualquer erro que possa ocorrer ao copiar para a área de transferência
+                console.error(err);
+            } finally {
+                // Remova o elemento temporário
+                document.body.removeChild(elementoTemporario);
+            }
+        }
+    </script>
 </body>
 </html>
